@@ -170,21 +170,21 @@ python3 dailynews.py --config ./config.json --alerts-only \
 
 ## Command line parameters
 
-| Parameter | Description |                      |
-| ---------------------------- | -------------------------------------------- | -------------------- |
-| `--config PATH` | Path to `config.json` file |                      |
-| `--profile morning | evening` | Select the profile |
-| `--alerts-only` | Generate only alerts |                      |
-| `--dry-run` | Does not use OpenAI |                      |
-| `--print` | Print output by `stdout` |                      |
-| `--stdout-only` | Only writes to `stdout`, does not save file |                      |
-| `--output-dir DIR` | Directory where the `.md` are saved |                      |
-| `--log-file PATH` | Log file |                      |
-| `--verbose` | Detailed logging | |
-| `--http-timeout N` | HTTP Timeout in seconds |                      |
-| `--location TEXT` | Nominal location for alerts; can be repeated |                      |
-| `--geolocation "(lat, lon)"` | Coordinates for alerts; can be repeated |                      |
-| `--locations "(a; b; c)"` | Mixed list of locations and/or coordinates |                      |
+| Parameter | Description |
+| ---------------------------- | -------------------------------------------- | 
+| `--config PATH` | Path to `config.json` file |
+| `--profile morning/evening` | Select the profile |
+| `--alerts-only` | Generate only alerts |
+| `--dry-run` | Does not use OpenAI |
+| `--print` | Print output by `stdout` |
+| `--stdout-only` | Only writes to `stdout`, does not save file |
+| `--output-dir DIR` | Directory where the `.md` are saved |
+| `--log-file PATH` | Log file |
+| `--verbose` | Detailed logging | 
+| `--http-timeout N` | HTTP Timeout in seconds |
+| `--location TEXT` | Nominal location for alerts; can be repeated |
+| `--geolocation "(lat, lon)"` | Coordinates for alerts; can be repeated |
+| `--locations "(a; b; c)"` | Mixed list of locations and/or coordinates |
 
 ## Example of `config.json`
 
