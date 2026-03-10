@@ -1,0 +1,88 @@
+{
+  "output_dir": "./out",
+  "model": "gpt-5-mini",
+  "dry_run": false,
+  "print": true,
+  "stdout_only": false,
+  "log_file": "./dailynews.log",
+  "verbose": false,
+  "http_timeout": 20,
+
+  "source_policy": {
+    "mode": "mixed",
+    "allow_domains": [
+      "nasa.gov",
+      "reuters.com",
+      "apnews.com",
+      "bbc.com"
+    ],
+    "deny_domains": [],
+    "deny_if_source_matches": []
+  },
+
+  "profiles": {
+    "morning": {
+      "topics": ["space_missions", "markets", "general"],
+      "max_items": 2,
+      "topic_limits": {
+        "space_missions": 3,
+        "markets": 2,
+        "general": 3
+      },
+      "global_max_items": 8,
+      "max_lines": 45,
+      "use_openai": true,
+      "include_markets": true,
+      "include_alerts": true,
+      "watchlist": [
+        "Revisar eventos espaciales con fecha confirmada",
+        "Mirar volatilidad de petróleo y VIX",
+        "Chequear si alguna alerta local escala durante el día"
+      ]
+    },
+    "evening": {
+      "topics": ["space_missions", "markets", "general", "geopolitics"],
+      "max_items": 4,
+      "topic_limits": {
+        "space_missions": 5,
+        "markets": 3,
+        "general": 4,
+        "geopolitics": 3
+      },
+      "global_max_items": 14,
+      "max_lines": 120,
+      "use_openai": true,
+      "include_markets": true,
+      "include_alerts": true,
+      "watchlist": [
+        "Distinguir qué fue confirmado y qué siguió incierto",
+        "Separar señales estructurales de ruido del día",
+        "Elegir 1 o 2 lecturas para profundizar"
+      ]
+    }
+  },
+
+  "alerts": {
+    "enabled": true,
+    "targets": [
+      { "kind": "name", "value": "Montevideo, Uruguay" },
+      { "kind": "name", "value": "Indiana, USA" },
+      { "kind": "geo", "lat": -34.48759, "lon": -55.62793, "label": "Migues exacto" }
+    ],
+    "weather_temp_drop_c": 8.0,
+    "weather_temp_rise_c": 8.0,
+    "wind_gust_kmh": 70.0,
+    "air_aqi_us": 100,
+    "alert_keywords": [
+      "wildfire",
+      "smoke",
+      "chemical spill",
+      "power outage",
+      "road closed",
+      "evacuation",
+      "zoo escaped animal",
+      "public health alert"
+    ],
+    "max_keyword_items": 4
+  }
+}
