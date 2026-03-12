@@ -1,26 +1,24 @@
 # dailynews.py
 
-`dailynews.py` is a **Markdown** news reader intended to be used from terminal, `cron` or automation scripts.
+`dailynews.py` is a **Markdown** news reader intended to be used from the terminal, `cron`, or automation scripts.  
 The project can also be used with `dailynews_gui.py`, a `tkinter` desktop frontend that reads the generated Markdown files and presents them in a more visual way.
 
-`dailynews.py` is not intended to replace human judgment or become a living geopolitical oracle. It is a practical tool to read better: first orient yourself, then go deeper, and in the meantime not miss relevant alerts.
+`dailynews.py` is not intended to replace human judgment or become a living geopolitical oracle. It is a practical tool to read better: first orient yourself, then go deeper, and meanwhile avoid missing relevant alerts.
 
-
-
-The idea of the project is to imitate the classic use of the paper diary:
+The idea of the project is to imitate the classic rhythm of reading a daily newspaper:
 
 - **morning**: a short reading to get your bearings;
-- **afternoon**: a broader reading to go deeper;
+- **evening**: a broader reading to go deeper;
 - **every hour**: a check for local or urgent alerts.
 
 The program combines:
 
 - RSS feeds for news;
-- snapshot of markets with `yfinance`;
+- market snapshots with `yfinance`;
 - weather and air quality alerts with Open-Meteo;
 - keyword alerts;
-- optional summary with OpenAI;
-- automatic fallback to raw Markdown if OpenAI crashes.
+- optional summaries with OpenAI;
+- automatic fallback to raw Markdown if OpenAI fails.
 
 ## Features
 
@@ -28,32 +26,32 @@ The program combines:
 - `--alerts-only` mode;
 - output in **Markdown**;
 - optional `tkinter` GUI frontend with visual navigation;
-- configuration by `config.json`;
-- command line overrides;
+- configuration through `config.json`;
+- command-line overrides;
 - alert targets by name or coordinates;
 - multiple locations in a single run;
-- source filters by simple policy (`off`, `mixed`, `allowlist`);
-- navigation by date, run time, profile and article inside the GUI;
+- source filters through a simple policy (`off`, `mixed`, `allowlist`);
+- navigation by date, run time, profile, and article inside the GUI;
 - dark card-style rendering for articles and alerts inside the GUI;
 - output to file and/or `stdout`;
-- logging to `stderr` or file;
+- logging to `stderr` or to a file;
 - automatic fallback if OpenAI does not respond or has no quota;
-- limits by topic, global and by number of lines.
+- limits by topic, global item count, and maximum number of lines.
 
-##Use philosophy
+## Use philosophy
 
-This script does not attempt to "think for the user". Try:
+This script does not attempt to "think for the user". It tries to:
 
 - deliver a quick information base in the morning;
-- allow for more reflective reading in the afternoon;
+- allow more reflective reading in the evening;
 - point out useful alerts during the day;
-- reduce noise without feigning absolute objectivity.
+- reduce noise without pretending to offer absolute objectivity.
 
 ## Requirements
 
 - Python 3.10 or higher;
 - Internet access;
-- Optional OpenAI API key, only for assisted summary.
+- optional OpenAI API key, only for assisted summaries.
 
 ## Dependencies
 
@@ -61,15 +59,15 @@ Recommended installation:
 
 ```bash
 python3 -m pip install --upgrade openai requests feedparser yfinance;
-````
+```
 
 `tkinter` is part of the standard Python installation in most desktop distributions. If your system packages it separately, install the corresponding Tk package for your platform.
 
 ## Main files
 
-* `dailynews.py`
-* `dailynews_gui.py`
-* `config.json`
+- `dailynews.py`
+- `dailynews_gui.py`
+- `config.json`
 
 ## Profiles
 
@@ -77,29 +75,30 @@ python3 -m pip install --upgrade openai requests feedparser yfinance;
 
 Designed for breakfast or quick reading:
 
-* fewer items;
-* fewer lines;
-* focus on orientation;
-*includes alerts if enabled.
+- fewer items;
+- fewer lines;
+- focus on orientation;
+- includes alerts if enabled.
 
 ### `evening`
 
 Designed for the afternoon or end of the day:
 
-* more context;
-* more items;
-* more space for tracking and watchlist.
+- more context;
+- more items;
+- more space for tracking and watchlist;
+- includes alerts if enabled.
 
 ## Alerts mode
 
 `--alerts-only` generates a quick alert check without producing the full digest.
 
-It is used for hourly runs with `cron`, for example to detect:
+It is intended for hourly runs with `cron`, for example, to detect:
 
-* sudden temperature changes;
-* intense gusts;
-* poor air quality;
-* urgent news associated with configured keywords.
+- sudden temperature changes;
+- intense gusts;
+- poor air quality;
+- urgent news associated with configured keywords.
 
 ## Installation
 
@@ -107,7 +106,7 @@ It is used for hourly runs with `cron`, for example to detect:
 2. Save `dailynews_gui.py` if you want the desktop frontend.
 3. Save `config.json`.
 4. Install dependencies.
-5. If you want summary with OpenAI, export the key:
+5. If you want summaries with OpenAI, export the key:
 
 ```bash
 export OPENAI_API_KEY="your_api_key";
@@ -149,17 +148,17 @@ python3 dailynews.py --config ./config.json --profile morning --dry-run --print;
 
 `dailynews_gui.py` is a `tkinter` frontend intended to run in the same directory as `dailynews.py` and `config.json`.
 
-The GUI does not replace the collector. It sits on top of the existing Markdown output and gives a friendlier reading workflow.
+The GUI does not replace the collector. It sits on top of the existing Markdown output and provides a friendlier reading workflow.
 
 Main ideas of the GUI:
 
-* read generated `.md` files from `output_dir`;
-* organize the history by **date -> time -> profile -> article**;
-* keep alerts in their own tab so they do not pollute the normal reading flow;
-* render articles and alerts as dark cards with title, source, date, summary and link;
-* open the article URL in the default browser;
-* allow manual execution of `morning`, `evening` and `alerts` runs;
-* keep a run log visible inside the application.
+- read generated `.md` files from `output_dir`;
+- organize the history by **date -> time -> profile -> article**;
+- keep alerts in their own tab so they do not pollute the normal reading flow;
+- render articles and alerts as dark cards with title, source, date, summary, and link;
+- open the article URL in the default browser;
+- allow manual execution of `morning`, `evening`, and `alerts` runs;
+- keep a run log visible inside the application.
 
 ### Start the GUI
 
@@ -167,13 +166,13 @@ Main ideas of the GUI:
 python3 dailynews_gui.py;
 ```
 
-The GUI expects that `dailynews.py` and `config.json` are available in the same working directory.
+The GUI expects `dailynews.py` and `config.json` to be available in the same working directory.
 
 ## Alert targets
 
-Alerts accept locations by name and coordinates.
+Alerts accept locations by name and by coordinates.
 
-### A nominal location
+### A named location
 
 ```bash
 python3 dailynews.py --config ./config.json --alerts-only --location "Montevideo, Uruguay";
@@ -191,7 +190,7 @@ python3 dailynews.py --config ./config.json --alerts-only --geolocation "(-34.48
 python3 dailynews.py --config ./config.json --alerts-only --locations "(Montevideo, Uruguay; Indiana, USA; (-34.48759, -55.62793))";
 ```
 
-### Multiple locations repeating flags
+### Multiple locations by repeating flags
 
 ```bash
 python3 dailynews.py --config ./config.json --alerts-only \
@@ -200,26 +199,25 @@ python3 dailynews.py --config ./config.json --alerts-only \
   --geolocation "(-34.48759, -55.62793)";
 ```
 
-## Command line parameters
+## Command-line parameters
 
 | Parameter | Description |
-| ---------------------------- | -------------------------------------------- | 
-| `--config PATH` | Path to `config.json` file |
+| ---------------------------- | -------------------------------------------- |
+| `--config PATH` | Path to the `config.json` file |
 | `--profile morning/evening` | Select the profile |
 | `--alerts-only` | Generate only alerts |
-| `--dry-run` | Does not use OpenAI |
-| `--print` | Print output by `stdout` |
-| `--stdout-only` | Only writes to `stdout`, does not save file |
-| `--output-dir DIR` | Directory where the `.md` are saved |
-| `--log-file PATH` | Log file |
-| `--verbose` | Detailed logging | 
-| `--http-timeout N` | HTTP Timeout in seconds |
-| `--location TEXT` | Nominal location for alerts; can be repeated |
+| `--dry-run` | Do not use OpenAI |
+| `--print` | Print output to `stdout` |
+| `--stdout-only` | Only write to `stdout`; do not save a file |
+| `--output-dir DIR` | Directory where `.md` files are saved |
+| `--log-file PATH` | Log file path |
+| `--verbose` | Detailed logging |
+| `--http-timeout N` | HTTP timeout in seconds |
+| `--location TEXT` | Named location for alerts; can be repeated |
 | `--geolocation "(lat, lon)"` | Coordinates for alerts; can be repeated |
 | `--locations "(a; b; c)"` | Mixed list of locations and/or coordinates |
 
-
-## Example of `config.json`
+## Example `config.json`
 
 ```json
 {
@@ -261,7 +259,7 @@ python3 dailynews.py --config ./config.json --alerts-only \
       "watchlist": [
         "Review space events with confirmed dates",
         "Look at oil volatility and VIX",
-        "Check if any local alerts escalate during the day"
+        "Check whether any local alerts escalate during the day"
       ]
     },
     "evening": {
@@ -279,9 +277,9 @@ python3 dailynews.py --config ./config.json --alerts-only \
       "include_markets": true,
       "include_alerts": true,
       "watchlist": [
-        "Distinguish what was confirmed and what remained uncertain,"
-        "Separating structural signals from daytime noise",
-        "Choose 1 or 2 readings to deepen"
+        "Distinguish what was confirmed and what remained uncertain",
+        "Separate structural signals from daytime noise",
+        "Choose 1 or 2 readings to explore more deeply"
       ]
     }
   },
@@ -312,15 +310,15 @@ python3 dailynews.py --config ./config.json --alerts-only \
 }
 ```
 
-## Font Policy
+## Source policy
 
 The `source_policy` section allows simple filters to be applied.
 
 ### Modes
 
-* `off`: does not filter;
-* `mixed`: allows everything except what is explicitly blocked;
-* `allowlist`: Only allow domains listed in `allow_domains`.
+- `off`: do not filter;
+- `mixed`: allow everything except what is explicitly blocked;
+- `allowlist`: only allow domains listed in `allow_domains`.
 
 ### Example
 
@@ -344,45 +342,44 @@ The order of precedence is:
 
 1. script defaults;
 2. `config.json`;
-3. command line parameters.
+3. command-line parameters.
 
-In other words: the CLI steps on the JSON.
+In other words, the CLI overrides the JSON.
 
 ## Output
 
-The program generates Markdown files with names like:
+The program generates Markdown files with names such as:
 
-* `morning_brief_YYYYMMDD_HHMMSS.md`
-* `evening_digest_YYYYMMDD_HHMMSS.md`
-* `alerts_YYYYMMDD_HHMMSS.md`
+- `morning_brief_YYYYMMDD_HHMMSS.md`
+- `evening_digest_YYYYMMDD_HHMMSS.md`
+- `alerts_YYYYMMDD_HHMMSS.md`
 
 If `--stdout-only` is used, no file is written.
 
 The GUI reads those generated Markdown files directly and uses their timestamps to build the navigation tree.
 
-
 ## GUI workflow
 
 A typical workflow can be:
 
-1. let `cron` generate morning, evening and alerts runs;
+1. let `cron` generate morning, evening, and alerts runs;
 2. open `dailynews_gui.py` later;
 3. browse runs by date and time;
 4. enter a profile and then a specific article;
 5. switch to the **Alerts** tab when reviewing urgent items;
 6. open the original article in the default browser when deeper reading is needed.
 
-##Logging
+## Logging
 
-Without `--log-file`, the log is output via `stderr`.
+Without `--log-file`, the log is written to `stderr`.
 
-With file:
+With a file:
 
 ```bash
 python3 dailynews.py --config ./config.json --log-file ./dailynews.log;
 ```
 
-In more detail:
+With more detail:
 
 ```bash
 python3 dailynews.py --config ./config.json --verbose;
@@ -390,19 +387,19 @@ python3 dailynews.py --config ./config.json --verbose;
 
 ## OpenAI and fallback
 
-If OpenAI is enabled and the call works, the program attempts to produce a summary that is more compact and pleasant to read.
+If OpenAI is enabled and the call succeeds, the program attempts to produce a more compact, pleasant-to-read summary.
 
-If OpenAI fails due to:
+If OpenAI fails because of:
 
-* lack of quota;
-* service error;
-* timeout;
-* authentication issue;
-* any other exceptions;
+- lack of quota;
+- service error;
+- timeout;
+- authentication issue;
+- any other exception;
 
-the program does not abort: it also generates a raw Markdown from the collected data.
+The program does not abort: it still generates raw Markdown from the collected data.
 
-This is intended so that `cron` remains useful even if the summary layer fails.
+This is intended to keep `cron` useful even if the summary layer fails.
 
 ## Examples for cron
 
@@ -427,7 +424,7 @@ This is intended so that `cron` remains useful even if the summary layer fails.
 ### Hourly alerts for a specific location
 
 ```cron
-0 * * * * /usr/bin/python3 /ruta/dailynews.py --config /ruta/config.json --alerts-only --location "Montevideo, Uruguay" >> /path/alerts_montevideo.log 2>&1
+0 * * * * /usr/bin/python3 /path/dailynews.py --config /path/config.json --alerts-only --location "Montevideo, Uruguay" >> /path/alerts_montevideo.log 2>&1
 ```
 
 ## Exit codes
@@ -442,29 +439,29 @@ This is intended so that `cron` remains useful even if the summary layer fails.
 
 ## Known limitations
 
-* RSS feeds may change or downgrade without notice;
-* Keyword searches depend on how the media publishes and titles;
-* An “escaped zoo animal” alert depends on it appearing in detectable headlines;
-* Google News RSS works in practice, but it should not be assumed as an eternal contract;
-* `global_max_items` trims by topic order, not relevance;
-* source filtering is simple: domain and source name, not deep semantic analysis;
-* still no local geocoding or feed cache;
-* the GUI currently renders from generated Markdown, so its parser depends on the output structure remaining reasonably stable;
-* the GUI is intentionally conservative and still does not implement full `config.json` editing.
+- RSS feeds may change or degrade without notice;
+- keyword searches depend on how media outlets publish and title their stories;
+- an “escaped zoo animal” alert depends on it appearing in detectable headlines;
+- Google News RSS works in practice, but it should not be treated as an eternal contract;
+- `global_max_items` trims by topic order, not by relevance;
+- source filtering is simple: domain and source name, not deep semantic analysis;
+- there is still no local geocoding or feed cache;
+- the GUI currently renders from generated Markdown, so its parser depends on the output structure remaining reasonably stable;
+- the GUI is intentionally conservative and still does not implement full `config.json` editing.
 
 ## Possible improvements
 
-* support for separate `--lat` and `--lon`;
-* local cache for geocoding and feeds;
-* retries with backoff;
-* stance rating by article (`neutral`, `favorable`, `critical`, `unclear`);
-* balanced grouping of perspectives in the evening digest;
-* additional output in JSON;
-* integration with mail, Telegram or `ntfy`;
-* settings editor for `config.json` inside the GUI;
-* optional migration from Markdown parsing to native JSON rendering in the GUI.
+- support for separate `--lat` and `--lon`;
+- local cache for geocoding and feeds;
+- retries with backoff;
+- stance rating by article (`neutral`, `favourable`, `critical`, `unclear`);
+- balanced grouping of perspectives in the evening digest;
+- additional output in JSON;
+- integration with mail, Telegram, or `ntfy`;
+- a settings editor for `config.json` inside the GUI;
+- optional migration from Markdown parsing to native JSON rendering in the GUI.
 
-##License
+## License
 
 ```
   Copyright 2018- William Martinez Bas <metfar@gmail.com>
@@ -484,6 +481,5 @@ This is intended so that `cron` remains useful even if the summary layer fails.
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
   MA 02110-1301, USA.
 ```
-
 
 <p align=center><b>- oOo -</b></p>
