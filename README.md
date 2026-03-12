@@ -20,6 +20,49 @@ The program combines:
 - optional summaries with OpenAI;
 - automatic fallback to raw Markdown if OpenAI fails.
 
+## Index
+
+- [Use philosophy](#use-philosophy)
+- [Requirements](#requirements)
+- [Dependencies](#dependencies)
+- [Main files](#main-files)
+- [Profiles](#profiles)
+  - [morning](#morning)
+  - [evening](#evening)
+- [Alerts mode](#alerts-mode)
+- [Installation](#installation)
+- [Basic use](#basic-use)
+  - [Morning brief](#morning-brief)
+  - [Evening digest](#evening-digest)
+  - [Alerts only](#alerts-only)
+  - [Mode without OpenAI](#mode-without-openai)
+- [Graphical frontend](#graphical-frontend)
+  - [Start the GUI](#start-the-gui)
+- [Alert targets](#alert-targets)
+  - [A named location](#a-named-location)
+  - [Exact coordinates](#exact-coordinates)
+  - [Multiple mixed locations](#multiple-mixed-locations)
+  - [Multiple locations by repeating flags](#multiple-locations-by-repeating-flags)
+- [Command-line parameters](#command-line-parameters)
+- [Example `config.json`](#example-configjson)
+- [Source policy](#source-policy)
+  - [Modes](#modes)
+  - [Example](#example)
+- [Configuration precedence](#configuration-precedence)
+- [Output](#output)
+- [GUI workflow](#gui-workflow)
+- [Logging](#logging)
+- [OpenAI and fallback](#openai-and-fallback)
+- [Examples for cron](#examples-for-cron)
+  - [Daily morning brief](#daily-morning-brief)
+  - [Daily evening digest](#daily-evening-digest)
+  - [Alerts every hour](#alerts-every-hour)
+  - [Hourly alerts for a specific location](#hourly-alerts-for-a-specific-location)
+- [Exit codes](#exit-codes)
+- [Known limitations](#known-limitations)
+- [Possible improvements](#possible-improvements)
+- [License](#license)
+
 ## Features
 
 - `morning` and `evening` profiles;
@@ -93,7 +136,7 @@ Designed for the afternoon or end of the day:
 
 `--alerts-only` generates a quick alert check without producing the full digest.
 
-It is intended for hourly runs with `cron`, for example, to detect:
+It is intended for hourly runs with `cron`, for example to detect:
 
 - sudden temperature changes;
 - intense gusts;
@@ -344,7 +387,7 @@ The order of precedence is:
 2. `config.json`;
 3. command-line parameters.
 
-In other words, the CLI overrides the JSON.
+In other words: the CLI overrides the JSON.
 
 ## Output
 
@@ -387,7 +430,7 @@ python3 dailynews.py --config ./config.json --verbose;
 
 ## OpenAI and fallback
 
-If OpenAI is enabled and the call succeeds, the program attempts to produce a more compact, pleasant-to-read summary.
+If OpenAI is enabled and the call works, the program attempts to produce a summary that is more compact and pleasant to read.
 
 If OpenAI fails because of:
 
@@ -397,7 +440,7 @@ If OpenAI fails because of:
 - authentication issue;
 - any other exception;
 
-The program does not abort: it still generates raw Markdown from the collected data.
+the program does not abort: it still generates raw Markdown from the collected data.
 
 This is intended to keep `cron` useful even if the summary layer fails.
 
@@ -454,7 +497,7 @@ This is intended to keep `cron` useful even if the summary layer fails.
 - support for separate `--lat` and `--lon`;
 - local cache for geocoding and feeds;
 - retries with backoff;
-- stance rating by article (`neutral`, `favourable`, `critical`, `unclear`);
+- stance rating by article (`neutral`, `favorable`, `critical`, `unclear`);
 - balanced grouping of perspectives in the evening digest;
 - additional output in JSON;
 - integration with mail, Telegram, or `ntfy`;
