@@ -1,6 +1,7 @@
 # dailynews.py
 
 `dailynews.py` is a **Markdown** news reader intended to be used from terminal, `cron` or automation scripts.
+The project can also be used with `dailynews_gui.py`, a `tkinter` desktop frontend that reads the generated Markdown files and presents them in a more visual way.
 
 `dailynews.py` is not intended to replace human judgment or become a living geopolitical oracle. It is a practical tool to read better: first orient yourself, then go deeper, and in the meantime not miss relevant alerts.
 
@@ -26,11 +27,14 @@ The program combines:
 - `morning` and `evening` profiles;
 - `--alerts-only` mode;
 - output in **Markdown**;
+- optional `tkinter` GUI frontend with visual navigation;
 - configuration by `config.json`;
 - command line overrides;
 - alert targets by name or coordinates;
 - multiple locations in a single run;
 - source filters by simple policy (`off`, `mixed`, `allowlist`);
+- navigation by date, run time, profile and article inside the GUI;
+- dark card-style rendering for articles and alerts inside the GUI;
 - output to file and/or `stdout`;
 - logging to `stderr` or file;
 - automatic fallback if OpenAI does not respond or has no quota;
@@ -59,9 +63,12 @@ Recommended installation:
 python3 -m pip install --upgrade openai requests feedparser yfinance;
 ````
 
+`tkinter` is part of the standard Python installation in most desktop distributions. If your system packages it separately, install the corresponding Tk package for your platform.
+
 ## Main files
 
 * `dailynews.py`
+* `dailynews_gui.py`
 * `config.json`
 
 ## Profiles
@@ -97,15 +104,16 @@ It is used for hourly runs with `cron`, for example to detect:
 ## Installation
 
 1. Save `dailynews.py`.
-2. Save `config.json`.
-3. Install dependencies.
-4. If you want summary with OpenAI, export the key:
+2. Save `dailynews_gui.py` if you want the desktop frontend.
+3. Save `config.json`.
+4. Install dependencies.
+5. If you want summary with OpenAI, export the key:
 
 ```bash
 export OPENAI_API_KEY="your_api_key";
 ```
 
-5. Give execution permissions if necessary:
+6. Give execution permissions if necessary:
 
 ```bash
 chmod +x dailynews.py;
@@ -136,6 +144,30 @@ python3 dailynews.py --config ./config.json --alerts-only --print;
 ```bash
 python3 dailynews.py --config ./config.json --profile morning --dry-run --print;
 ```
+
+## Graphical frontend
+
+`dailynews_gui.py` is a `tkinter` frontend intended to run in the same directory as `dailynews.py` and `config.json`.
+
+The GUI does not replace the collector. It sits on top of the existing Markdown output and gives a friendlier reading workflow.
+
+Main ideas of the GUI:
+
+* read generated `.md` files from `output_dir`;
+* organize the history by **date -> time -> profile -> article**;
+* keep alerts in their own tab so they do not pollute the normal reading flow;
+* render articles and alerts as dark cards with title, source, date, summary and link;
+* open the article URL in the default browser;
+* allow manual execution of `morning`, `evening` and `alerts` runs;
+* keep a run log visible inside the application.
+
+### Start the GUI
+
+```bash
+python3 dailynews_gui.py;
+```
+
+The GUI expects that `dailynews.py` and `config.json` are available in the same working directory.
 
 ## Alert targets
 
@@ -185,6 +217,7 @@ python3 dailynews.py --config ./config.json --alerts-only \
 | `--location TEXT` | Nominal location for alerts; can be repeated |
 | `--geolocation "(lat, lon)"` | Coordinates for alerts; can be repeated |
 | `--locations "(a; b; c)"` | Mixed list of locations and/or coordinates |
+
 
 ## Example of `config.json`
 
@@ -325,6 +358,20 @@ The program generates Markdown files with names like:
 
 If `--stdout-only` is used, no file is written.
 
+The GUI reads those generated Markdown files directly and uses their timestamps to build the navigation tree.
+
+
+## GUI workflow
+
+A typical workflow can be:
+
+1. let `cron` generate morning, evening and alerts runs;
+2. open `dailynews_gui.py` later;
+3. browse runs by date and time;
+4. enter a profile and then a specific article;
+5. switch to the **Alerts** tab when reviewing urgent items;
+6. open the original article in the default browser when deeper reading is needed.
+
 ##Logging
 
 Without `--log-file`, the log is output via `stderr`.
@@ -401,7 +448,9 @@ This is intended so that `cron` remains useful even if the summary layer fails.
 * Google News RSS works in practice, but it should not be assumed as an eternal contract;
 * `global_max_items` trims by topic order, not relevance;
 * source filtering is simple: domain and source name, not deep semantic analysis;
-* still no local geocoding or feed cache.
+* still no local geocoding or feed cache;
+* the GUI currently renders from generated Markdown, so its parser depends on the output structure remaining reasonably stable;
+* the GUI is intentionally conservative and still does not implement full `config.json` editing.
 
 ## Possible improvements
 
@@ -411,7 +460,9 @@ This is intended so that `cron` remains useful even if the summary layer fails.
 * stance rating by article (`neutral`, `favorable`, `critical`, `unclear`);
 * balanced grouping of perspectives in the evening digest;
 * additional output in JSON;
-* integration with mail, Telegram or `ntfy`.
+* integration with mail, Telegram or `ntfy`;
+* settings editor for `config.json` inside the GUI;
+* optional migration from Markdown parsing to native JSON rendering in the GUI.
 
 ##License
 
